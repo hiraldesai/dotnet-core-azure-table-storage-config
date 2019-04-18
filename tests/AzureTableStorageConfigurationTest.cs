@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.Extensions.Configuration.AzureTableStorage;
+using Dimps.Extensions.Configuration.AzureTableStorage;
 using Moq;
 using Xunit;
 
