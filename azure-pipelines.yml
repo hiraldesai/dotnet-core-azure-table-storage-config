@@ -11,26 +11,39 @@ variables:
   buildConfiguration: 'Release'
   slnName: 'Configuration.AzureTableStorage.sln'
   projectName: 'Dimps.Extensions.Configuration.AzureTableStorage.csproj'
+  sdkVersion: '2.2.105'
+  nugetVersion: '4.9.4'
 
 steps:
 
 - task: UseDotNet@2
+  displayName: 'Use dotnet core $(sdkVersion)'
   inputs:
-    version: '2.2.105'
+    version: '$(sdkVersion)'
+
+- task: NuGetToolInstaller@0
+  displayName: 'Install NuGet tools version $(nugetVersion)'
+  inputs:
+    versionSpec: '$(nugetVersion)'
 
 - task: NuGetCommand@2
-  inputs:
+  displayName: 'Restore NuGet packages'
+  inputs:    
     command: 'restore'
     restoreSolution: '$(slnName)'
 
 - task: VSBuild@1
-  inputs:
+  displayName: 'Build $(slnName)'  
+  inputs:    
     solution: '$(slnName)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: 'Test $(slnName)'  
   inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: '**\*test*.dll!**\*TestAdapter.dll!**\obj\**'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
