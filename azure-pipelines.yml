@@ -40,10 +40,15 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
-  displayName: 'Test assemblies'  
+  displayName: 'VsTest - testAssemblies'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '**\*Tests.dll!**\*TestAdapter.dll!**\obj\**'
+    testAssemblyVer2: |
+     **\*Tests*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+    runInParallel: true
+    codeCoverageEnabled: false
+    testRunTitle: 'Unit Tests'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
