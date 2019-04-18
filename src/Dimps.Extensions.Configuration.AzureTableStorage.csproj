@@ -9,6 +9,10 @@
     <Authors>Hiral Desai</Authors>
     <Company />
     <RootNamespace>Dimps.Extensions.Configuration.AzureTableStorage</RootNamespace>
+    <Version>1.0.1</Version>
+    <PackageProjectUrl>https://github.com/hiraldesai/AzureTableStorageConfigurationProvider</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/hiraldesai/AzureTableStorageConfigurationProvider</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
