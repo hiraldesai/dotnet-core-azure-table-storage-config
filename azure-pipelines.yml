@@ -12,20 +12,28 @@ pool:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  slnName: 'Configuration.AzureTableStorage.sln'
+  projectName: 'Dimps.Extensions.Configuration.AzureTableStorage.csproj'
 
 steps:
 
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
+    restoreSolution: '$(slnName)'
 
 - task: VSBuild@1
   inputs:
-    solution: '**\*.sln'
+    solution: '$(slnName)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    searchPatternPack: '**/Dimps.Extensions.Configuration.AzureTableStorage.csproj'
+    searchPatternPack: '**/*$(projectName)'
