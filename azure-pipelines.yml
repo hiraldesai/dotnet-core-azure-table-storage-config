@@ -1,0 +1,68 @@
+# Build, Test, Pack & Publish NuGet package Dimps.Extensions.Configuration.AzureTableStorage
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  slnName: 'Configuration.AzureTableStorage.sln'
+  projectName: 'Dimps.Extensions.Configuration.AzureTableStorage.csproj'
+  sdkVersion: '2.2.105'
+  nugetVersion: '4.9.4'
+
+steps:
+
+- task: UseDotNet@2
+  displayName: 'Use dotnet core $(sdkVersion)'
+  inputs:
+    version: '$(sdkVersion)'
+
+- task: NuGetToolInstaller@0
+  displayName: 'Install NuGet tools version $(nugetVersion)'
+  inputs:
+    versionSpec: '$(nugetVersion)'
+
+- task: NuGetCommand@2
+  displayName: 'Restore NuGet packages'
+  inputs:    
+    command: 'restore'
+    restoreSolution: '$(slnName)'
+
+- task: VSBuild@1
+  displayName: 'Build $(slnName)'  
+  inputs:    
+    solution: '$(slnName)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'VsTest - testAssemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\*Tests*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+    runInParallel: true
+    codeCoverageEnabled: false
+    testRunTitle: 'Unit Tests'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet pack'  
+  inputs:
+    command: 'pack'
+    searchPatternPack: '**/*$(projectName)'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push '  
+  inputs:
+    command: 'push'
+    nuGetFeedType: 'external'
+    externalEndpoint: '8d624c1f-ddb9-4957-9785-aa61c4b14e84'
+  continueOnError: true
+  enabled: false
