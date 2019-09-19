@@ -1,6 +1,6 @@
 [![Build Status](https://dev.azure.com/dimps/AzureTableStorageConfigurationProvider/_apis/build/status/hiraldesai.AzureTableStorageConfigurationProvider?branchName=master)](https://dev.azure.com/dimps/AzureTableStorageConfigurationProvider/_build/latest?definitionId=1&branchName=master)
 
-# Azure Table Storage Configuration Provider
+# Azure Table Storage Configuration Provider for .Net Core
 
 This repository hosts the code for Azure Table Storage Configuration provider for .Net Core. The artifacts from this repository are [published on NuGet](https://www.nuget.org/packages/Dimps.Extensions.Configuration.AzureTableStorage) as `Dimps.Extensions.Configuration.AzureTableStorage`.
 
